@@ -10,12 +10,12 @@
 ## First Project Work-Search https://documenter.getpostman.com/view/3634938/SVfRtT4h?version=latest
 
 
-**Auth
+*Auth
 POST Register[Pass role as String, to prevent confusion with id.||User Roles = [worker, employer, admin]]
 POST Login
 POST Logout
 
-**User
+*User
 GET Index[
 PARAMS
 searchterm
@@ -41,7 +41,7 @@ Other users only self account
 Use SoftDelete. Also SoftDelete all related data (organizations, vacancies, bookings)
 ]
 
-**Organization
+*Organization
 GET Index[
 http://work-search.loc/api/organization
 Admin get list of all organizations
@@ -79,7 +79,7 @@ Use SoftDelete. When deleting organizations also SoftDelete all vacancies and bo
 ]
 
 
-**Vacancy
+*Vacancy
 GET Index[
 PARAMS
 only_activefalse
@@ -121,7 +121,7 @@ Admin can do this too
 ]
 
 
-**Stats
+*Stats
 GET Vacancies[
 http://work-search.loc/api/stats/vacancy
 Admin only
