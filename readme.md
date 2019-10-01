@@ -21,7 +21,7 @@ PARAMS
 searchterm
 Filter by search term (search in fields "first_name", "last_name", "city", "country")
 ]+[
-http://host/api/user?search=term
+http://work-search.loc/api/user?search=term
 Admins only
 ]
 GET Show[
