@@ -60,7 +60,7 @@ class OrganizationController extends Controller
         //$organization = Organization::create($request->all());
 
         $organization = Organization::add($request->all());
-        //$organization->setCreator($request->get('creator_id'));
+        //$organization->setCreator($request->get('creator_id'));//add boot
         
         return new OrganizationResource($organization);
         
@@ -153,16 +153,5 @@ class OrganizationController extends Controller
 
         return response()->json(['success' => true], 200);
         
-    }
-
-
-    public function setCreator($organization_id, $creator_id)
-    {
-        $organization = Organization::findOrFail($organization_id);
-        $creator = Creator::findOrFail($creator_id);
-        $creator->organizations()->save($organization);
-        $organization->creator()->save($creator);
-
-        return response()->json($organization->load('creator'), 200);
     }
 }
