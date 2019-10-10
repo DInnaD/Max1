@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     static::creating(function ($table) {
         
-        $table->creator_id = auth()->user()->id;
+        $table->id = auth()->user()->id;
 
     });
 }
