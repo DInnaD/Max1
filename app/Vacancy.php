@@ -61,22 +61,22 @@ class Vacancy extends Model
     
      /******* Getters *******/
     
-//     public function getWorkersBookedAttribute()
-//     {        
-//         $workers_booked = $this->workers()->count();
+    public function getWorkersBookedAttribute()
+    {        
+        $workers_booked = $this->workers()->count();
         
-//         return $workers_booked;
+        return $workers_booked;
        
-//     }
+    }
 
-//     public function getStatusAttribute()
-//     {
-//         if($this->workers_booked >= $this->workers_amount){
-//             return 'closed';
-//         }
-//         return 'active';
+    public function getStatusAttribute()
+    {
+        if($this->workers_booked >= $this->workers_amount){
+            return 'closed';
+        }
+        return 'active';
         
-//     }
+    }
     
      /******* Static Functions *******/
     
