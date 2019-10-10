@@ -33,6 +33,18 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token', 'deleted_at', 'pivot'
     ];
     
+    public static function boot()
+{
+
+    parent::boot();
+
+    static::creating(function ($table) {
+        
+        $table->creator_id = auth()->user()->id;
+
+    });
+}
+    
     /******* Relations *******/
     
     public function vacancies()
@@ -50,19 +62,19 @@ class User extends Authenticatable
    
     public function edit($fields)
     {
-        $this->fill($fields); //not all fields edit is error***********get password withoun renew*************************
+        $this->fill($fields); 
         
         $this->save();
     }
 
-    public function generatePassword($password)
-    {
-        if($password != null)
-        {
-            $this->password = Hash::make($password);
-            $this->save();
-        }
-    }
+//     public function generatePassword($password)//********for edit func for renew pass**********not need instead updatePassword func
+//     {
+//         if($password != null)
+//         {
+//             $this->password = Hash::make($password);
+//             $this->save();
+//         }
+//     }
 
     public function generateToken()
     {
