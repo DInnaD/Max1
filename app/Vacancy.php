@@ -39,7 +39,7 @@ class Vacancy extends Model
     
     public function workers()
     {
-    	return $this->belongsToMany('App\User', 'user_vacancy', 'user_id', 'vacancy_id');
+    	return $this->belongsToMany('App\User', 'user_vacancy', 'user_id', 'vacancy_id');//, 'vacancy_id' delete test
     }
 
      public function organization()
@@ -49,22 +49,22 @@ class Vacancy extends Model
     
      /******* Getters *******/
     
-    public function getWorkersBookedAttribute()
-    {        
-        $workers_booked = $this->workers()->count();
+//     public function getWorkersBookedAttribute()
+//     {        
+//         $workers_booked = $this->workers()->count();
         
-        return $workers_booked;
+//         return $workers_booked;
        
-    }
+//     }
 
-    public function getStatusAttribute()
-    {
-        if($this->workers_booked >= $this->workers_amount){
-            return 'closed';
-        }
-        return 'active';
+//     public function getStatusAttribute()
+//     {
+//         if($this->workers_booked >= $this->workers_amount){
+//             return 'closed';
+//         }
+//         return 'active';//delete this code*******************************************
         
-    }
+//     }
     
      /******* Static Functions *******/
     
@@ -73,7 +73,7 @@ class Vacancy extends Model
         $vacancies = Vacancy::all();
         $all = $vacancies->count();
         $closed = $vacancies->filter(function ($value){
-            return $value->workers_booked >= $value->workers_amount;
+            return $value->workers_booked >= $value->workers_amount;//return $value->status;******************
         })->count();
         $active = $all - $closed;
         $vacancy = collect(['active' =>  $active, 'closed' => $closed, 'all' => $all]);
@@ -84,7 +84,7 @@ class Vacancy extends Model
 
     public static function getIndexList(Request $request)
     {
-        $only_active = $request->input('only_active');
+        $only_active = $request->input('only_active');//where id*********************************
         $vacancies = \App\Http\Resources\VacancyCollection::make(Vacancy::all());
         
         return $vacancies = $vacancies->filter(function ($value) use ($only_active) {
