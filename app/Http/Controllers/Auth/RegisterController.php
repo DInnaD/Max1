@@ -79,7 +79,7 @@ class RegisterController extends Controller
             'country' => $data['country'],
             'city' => $data['city'],
             'phone' => $data['phone'],
-            'role' => $data['role'],
+            'role' => 'worker',
             //'api_token' => Str::random(80),//seconHash
         ]);
     }
