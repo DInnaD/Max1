@@ -46,21 +46,34 @@ class UserController extends Controller
     {
         //$this->authorize('update', $user);
         //$user->update($request->all());
-        $this->validate($request, [
-            'password'  =>  'required',
-            'email' =>  [
-                'required',
-                'email',
-                Rule::unique('users')->ignore(Auth::user()->id),
-            ],
-        ]);
+        
+//         $this->validate($request, [
+//             'password'  =>  'required',
+//             'email' =>  [
+//                 'required',
+//                 'email',
+//                 Rule::unique('users')->ignore(Auth::user()->id),// ignore to request + del in the request attribute
+//             ],
+//         ]);
 
         $user = Auth::user();
-        $user->edit($request->all());
-        $user->generatePassword($request->get('password'));
+        
+        $user->update($request->except('password', 'role'));
+//         $user->edit($request->all());
+//         $user->generatePassword($request->get('password'));
         
         return new UserResource($user);
 
+    }
+    
+    public function updatePassword(UpdateUserPasswordRequest $request)
+    {
+        $currentUser = \Auth::user()->id();//auth()->user()->id;
+        if (Hash::check($request->get('password'), $currentUser->password)) {
+            $currentUser->update(['password' => Hash::make($request->get('new_password'))]);
+            return response()->json(['success' => true, 'message' => 'Password updated']);
+        }
+        return response()->json(['success' => false, 'error' => 'Old password is incorrect']);
     }
 
     public function destroy(User $user)
