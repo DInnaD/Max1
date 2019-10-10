@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Filters\QueryFilter;
@@ -51,7 +50,7 @@ class User extends Authenticatable
    
     public function edit($fields)
     {
-        $this->fill($fields); //name,email
+        $this->fill($fields); //not all fields edit is error************************************
         
         $this->save();
     }
@@ -72,18 +71,13 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
-
-    public function remove()
-    {
-        $this->removeAvatar();
-        $this->delete();
-    }
     
     /******* Getters *******/
 
     public static function getRoleList(Request $request)
     {
-       $users = User::all();//\App\Http\Resources\UserCollection::make(User::all());
+       $users = User::all();
+        //refac func***************************************************************
        $worker = $users->filter(function ($value){
             return $value->role == 'worker';
        })->count();
