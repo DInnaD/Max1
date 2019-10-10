@@ -50,7 +50,7 @@ class User extends Authenticatable
    
     public function edit($fields)
     {
-        $this->fill($fields); //not all fields edit is error************************************
+        $this->fill($fields); //not all fields edit is error***********get password withoun renew*************************
         
         $this->save();
     }
@@ -77,16 +77,19 @@ class User extends Authenticatable
     public static function getRoleList(Request $request)
     {
        $users = User::all();
-        //refac func***************************************************************
-       $worker = $users->filter(function ($value){
-            return $value->role == 'worker';
-       })->count();
-       $employer = $users->filter(function ($value){
-            return $value->role == 'employer';
-       })->count();
-       $admin = $users->filter(function ($value){
-            return $value->role == 'admin';
-       })->count();
+       $worker = User::where('role','worker')->get()->count();
+//            $users->filter(function ($value){
+//             return $value->role == 'worker';
+//        })->count();
+       $employer = User::where('role','employer')->get()->count();
+//            $users->filter(function ($value){
+//             return $value->role == 'employer';
+//        })->count();
+       $admin = User::where('role','admin')->get()->count();
+//            $users->filter(function ($value){
+//             return $value->role == 'admin';
+//        })->count();
+        
         return $user = collect(['worker' =>  $worker, 'employer' => $employer, 'admin' => $admin]);
     }
 
