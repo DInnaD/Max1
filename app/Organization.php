@@ -25,6 +25,19 @@ class Organization extends Model
         'creator_id'
     ];
     
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($table)//self $model)
+        {
+            $table->creator_id = auth()->user()->id;
+//             if(\Auth::id()){
+//                 $model->user_id = \Auth::id();
+//             }
+//         });
+    }
+    
      /******* Relations *******/
 
     public function creator()
@@ -47,16 +60,10 @@ class Organization extends Model
     {
         $organization = new static;
         $organization->fill($fields);
-        $organization->creator_id = \Auth::user()->id;
+        //$organization->creator_id = \Auth::user()->id;
         $organization->save();
 
         return $organization;
-    }
-    public function setCreator($id)
-    {
-        if($id == null) {return;}
-        $this->creator_id = $id;
-        $this->save();
     }
 
      /******* Static Functions *******/
@@ -65,7 +72,7 @@ class Organization extends Model
     {
         $organizations = \App\Http\Resources\UserCollection::make(User::all());
         $all = $organizations->count();
-        $active = count($organizations->where('deleted_at', '=', null)->all());
+        $active = $organizations->where('deleted_at', '=', null)->all()->count();
         $softDelete = $all - $active;
         return $organization = collect(['active' =>  $active, 'softDelete' => $softDelete, 'all' => $all]);
     }
