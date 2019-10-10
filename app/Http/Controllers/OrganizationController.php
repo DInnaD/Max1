@@ -38,7 +38,8 @@ class OrganizationController extends Controller
         //$organization = Organization::getOrganizationList($request);
         $organizations = \App\Http\Resources\UserCollection::make(User::all());
         $all = $organizations->count();
-        $active = count($organizations->where('deleted_at', '=', null)->all());
+        $active = $organizations->where('deleted_at', '=', null)->all()->count();
+        //$active = count($organizations->where('deleted_at', '=', null)->all());
         $softDelete = \App\Organization::onlyTrashed()->count();
         $organization = collect(['active' =>  $active, 'softDelete' => $softDelete, 'all' => $all]);
         return response()->json(['success' => true, 'data' => $organization], 200);
@@ -60,7 +61,7 @@ class OrganizationController extends Controller
         //$organization = Organization::create($request->all());
 
         $organization = Organization::add($request->all());
-        //$organization->setCreator($request->get('creator_id'));//add boot
+        //$organization->setCreator($request->get('creator_id'));//add boot*******************
         
         return new OrganizationResource($organization);
         
