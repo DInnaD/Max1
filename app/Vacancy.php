@@ -39,7 +39,7 @@ class Vacancy extends Model
     
     public function workers()
     {
-    	return $this->belongsToMany('App\User', 'user_vacancy', 'user_id', 'vacancy_id');//, 'vacancy_id' delete test
+    	return $this->belongsToMany('App\User', 'user_vacancy', 'user_id')//, 'vacancy_id');//, 'vacancy_id' delete test
     }
 
      public function organization()
@@ -62,7 +62,7 @@ class Vacancy extends Model
 //         if($this->workers_booked >= $this->workers_amount){
 //             return 'closed';
 //         }
-//         return 'active';//delete this code*******************************************
+//         return 'active';
         
 //     }
     
@@ -73,7 +73,7 @@ class Vacancy extends Model
         $vacancies = Vacancy::all();
         $all = $vacancies->count();
         $closed = $vacancies->filter(function ($value){
-            return $value->workers_booked >= $value->workers_amount;//return $value->status;******************
+            return $value->workers_booked >= $value->workers_amount;
         })->count();
         $active = $all - $closed;
         $vacancy = collect(['active' =>  $active, 'closed' => $closed, 'all' => $all]);
@@ -84,11 +84,11 @@ class Vacancy extends Model
 
     public static function getIndexList(Request $request)
     {
-        $only_active = $request->input('only_active');//where id*********************************
+        $only_active = $request->input('only_active');
         $vacancies = \App\Http\Resources\VacancyCollection::make(Vacancy::all());
         
         return $vacancies = $vacancies->filter(function ($value) use ($only_active) {
-            if ($only_active != false) {
+            if (bool($only_active) != false) {
                 if ($value->workers_booked < $value->workers_amount) {
                     return $value;
                 }
