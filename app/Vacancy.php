@@ -35,6 +35,18 @@ class Vacancy extends Model
         'workers_booked',
          ];
     
+        public static function boot()
+        {
+
+            parent::boot();
+
+            static::creating(function ($table) {
+
+                $table->id = auth()->user()->id;
+
+            });
+        }
+    
      /******* Relations *******/
     
     public function workers()
@@ -100,7 +112,7 @@ class Vacancy extends Model
 
     public static function getBook(Request $request)
     {
-        $id = \Auth::user()->id;
+        //$id = \Auth::user()->id;//boot
         $vacancyId = $request->post('vacancy_id');
         $userId = $request->post('user_id');
         $vacancy = Vacancy::find($vacancyId);
