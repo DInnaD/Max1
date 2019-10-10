@@ -105,7 +105,7 @@ class VacancyController extends Controller
         
         return new VacancyResource($vacancy);
         
-    }//call to undef user() but work after added to workers()  'id' + add VacancyRequest
+    }//call to undef user() but work after added to workers()  'id' + add VacancyRequest**********
     /**
      * Remove the specified resource from storage.
      *
@@ -122,13 +122,13 @@ class VacancyController extends Controller
         
     }
     
-    public function setOrganization($id, $organization_id)
-    {
-        $vacancy = Vacancy::findOrFail($id);
-        $organization = Organization::findOrFail($organization_id);
-        $organization->vacancies()->save($vacancy);
-        return response()->json($vacancy->load('organization'), 200);
-    }
+//     public function setOrganization($id, $organization_id)
+//     {
+//         $vacancy = Vacancy::findOrFail($id);
+//         $organization = Organization::findOrFail($organization_id);
+//         $organization->vacancies()->save($vacancy);
+//         return response()->json($vacancy->load('organization'), 200);
+//     }
 
 
 
