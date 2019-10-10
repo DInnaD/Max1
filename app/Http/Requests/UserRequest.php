@@ -17,7 +17,16 @@ class UserRequest extends FormRequest
      */
     public static function rules()//only update
     {
-    
+        // for new project updateRequest
+        //         $this->validate($request, [
+//             'password'  =>  'required',
+//             'email' =>  [
+//                 'required',
+//                 'email',
+//                 Rule::unique('users')->ignore(Auth::user()->id),// ignore to request + del in the request attribute
+//             ],
+//         ]);
+    //createReq
         return [
             'email' =>  'required|email|unique:users|string',
             'password'  =>  'required|string|min:6|max:20',
@@ -30,25 +39,6 @@ class UserRequest extends FormRequest
 
         ];
     }
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            'email' =>  'User Email',
-            'password'  =>  'User Password',
-            'first_name'  =>  'User Name',
-            'last_name' => 'User Surname',
-            'country' => 'User Country',
-            'city' => 'User City',
-            'phone' => 'User Phone Number',
-            'role' => 'User Role',//pivot
-            
-        ];
-    }
-
-  
+    
+    
 }
